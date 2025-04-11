@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not the End</title>
+    <style>
+        body {
+            background-color: black; /* Черный фон */
+            color: white; /* Белый текст */
+            font-family: Arial, sans-serif; /* Шрифт */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 4em; /* Большие буквы */
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.5em; /* Маленькие буквы для "soon..." */
+            margin: 10px 0;
+            cursor: pointer; /* Изменение курсора на указатель */
+        }
+
+        p:hover {
+            text-decoration: underline; /* Подчеркивание текста при наведении */
+        }
+
+        .error {
+            color: red;
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: none; /* Скрыто по умолчанию */
+        }
+    </style>
+</head>
+<body>
+
+<h1>It is not the end</h1>
+<p id="soon" onclick="showRandomTime()">soon...</p>
+<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available
+    yet)</p>
+
+<script>
+    function showRandomTime() {
+
+        const randomTime = Math.floor(Math.random() * (66 - 1 + 1)) + 1;
+
+        const randomNumber = Math.floor(Math.random() * 17120) + 1;
+
+
+        alert('Random time: ' + randomTime + ' seconds\nRandom number: ' + randomNumber);
+
+
+        setTimeout(function() {
+            document.getElementById("errorMessage").style.display = "block";
+        }, randomTime * 1000); // Время задержки, преобразованное в миллисекунды
+    }
+</script>
+</body>
+</html>
