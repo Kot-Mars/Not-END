@@ -17,6 +17,7 @@
             text-align: center;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
         h1 {
@@ -55,11 +56,6 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         #eye {
             position: absolute;
             width: 100px;
@@ -95,37 +91,79 @@
             display: none;
             z-index: 1000;
         }
+
+        /* Стили для кнопки */
+        #openButton {
+            background-color: #f39c12;
+            color: white;
+            font-size: 2em;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #openButton:hover {
+            background-color: #e67e22;
+        }
+
+        /* Окно с контентом скрыто по умолчанию */
+        #content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
     </style>
 </head>
 <body>
 
-<h1>It is not the end</h1>
-<p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+<!-- Кнопка "Open" -->
+<button id="openButton">Open</button>
 
-<div id="loading" class="spinner"></div>
+<!-- Основной контент скрыт по умолчанию -->
+<div id="content">
+    <h1>It is not the end</h1>
+    <p id="soon" onclick="showRandomTime()">soon...</p>
+    <p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
 
-<div id="eye">
-    <div id="pupil"></div>
-</div>
+    <div id="loading" class="spinner"></div>
 
-<audio id="backgroundMusic" loop>
-    <source src="music.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <div id="eye">
+        <div id="pupil"></div>
+    </div>
 
-<audio id="whisperSound" loop>
-    <source src="971998521-389170532.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
-<div id="notification">
-    Thank you, now I know who you are and where you are... See you soon...
+    <audio id="whisperSound" loop>
+        <source src="971998521-389170532.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="notification">
+        Thank you, now I know who you are and where you are... See you soon...
+    </div>
 </div>
 
 <script>
-    // Включить фоновую музыку
-    window.addEventListener("DOMContentLoaded", function () {
+    // Обработчик для кнопки "Open"
+    document.getElementById('openButton').addEventListener('click', function() {
+        // Скрыть кнопку
+        document.getElementById('openButton').style.display = 'none';
+
+        // Показать контент
+        const content = document.getElementById('content');
+        content.style.display = 'block';
+
+        // Добавить эффект плавного появления
+        setTimeout(function() {
+            content.style.opacity = 1;
+        }, 100);
+
+        // Включить музыку
         const backgroundMusic = document.getElementById("backgroundMusic");
         backgroundMusic.volume = 0.5;
         backgroundMusic.play().catch(() => {
