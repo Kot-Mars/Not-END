@@ -81,10 +81,8 @@
             top: 50%;  /* Центрируем зрачок в глазу */
             left: 50%;  /* Центрируем зрачок в глазу */
             transform: translate(-50%, -50%);
-            transform-origin: 50% 50%; /* Устанавливаем точку вращения в центр */
         }
 
-        /* Уведомление */
         #notification {
             position: fixed;
             top: 20px;
@@ -96,21 +94,15 @@
             font-size: 1.2em;
             display: none;
             z-index: 1000;
-            animation: fadeInText 1s ease-in-out;
         }
-
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
     </style>
 </head>
 <body>
 
 <h1>It is not the end</h1>
 <p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available
+    yet)</p>
 
 <div id="loading" class="spinner"></div>
 
@@ -158,7 +150,7 @@
             document.getElementById("errorMessage").style.display = "block";
 
             // Показать уведомление
-            const notification = document.getElementById("notification");
+            var notification = document.getElementById("notification");
             notification.style.display = "block";
 
             // Скрыть уведомление через 5 секунд
@@ -170,20 +162,17 @@
 
     // Двигаем зрачок в глазке за курсором
     document.addEventListener("mousemove", function(e) {
-        var eye = document.getElementById("eye");
-        var pupil = document.getElementById("pupil");
-
-        var eyeRect = eye.getBoundingClientRect();
-        var centerX = eyeRect.left + eyeRect.width / 2;
-        var centerY = eyeRect.top + eyeRect.height / 2;
-
-        var angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-        var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4); // ограничиваем движение зрачка
-
-        var pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
-        var pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
-
-        pupil.style.transform = "translate(-50%, -50%) translate(" + pupilX + "px, " + pupilY + "px)";
+    const eye = document.getElementById("eye");
+    const pupil = document.getElementById("pupil");
+    const rect = eye.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+    const distance = Math.min(rect.width / 4, rect.height / 4);
+    const pupilX = Math.cos(angle) * distance;
+    const pupilY = Math.sin(angle) * distance;
+    pupil.style.left = calc(50% + ${pupilX}px);
+    pupil.style.top = calc(50% + ${pupilY}px);
     });
 </script>
 
