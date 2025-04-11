@@ -66,9 +66,9 @@
             height: 100px;
             border-radius: 50%;
             background-color: white;
-            top: 50%;
+            bottom: 10%;  /* Перемещаем глаз вниз */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
@@ -78,8 +78,8 @@
             height: 40px;
             border-radius: 50%;
             background-color: black;
-            top: 50%;
-            left: 50%;
+            top: 50%;  /* Центрируем зрачок в глазу */
+            left: 50%;  /* Центрируем зрачок в глазу */
             transform: translate(-50%, -50%);
         }
     </style>
@@ -96,17 +96,29 @@
     <div id="pupil"></div>
 </div>
 
-<audio id="horrorMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+<!-- Фоновая музыка -->
+<audio id="backgroundMusic" loop>
+    <source src="music.mp3" type="audio/mp3"> <!-- Замените на путь к вашему аудиофайлу -->
+    Your browser does not support the audio element.
+</audio>
+
+<!-- Шепот, который будет зациклен при нажатии -->
+<audio id="whisperSound" loop>
+    <source src="971998521-389170532.mp3" type="audio/mp3"> <!-- Замените на путь к вашему аудиофайлу с шепотом -->
     Your browser does not support the audio element.
 </audio>
 
 <script>
-    document.getElementById("horrorMusic").play();
+    // Включить фоновую музыку
+    document.getElementById("backgroundMusic").play();
 
     function showRandomTime() {
+        // Показать индикатор загрузки и скрыть текст "soon..."
         document.getElementById("loading").style.display = "block";
         document.getElementById("soon").style.display = "none";
+
+        // Включить шепот
+        document.getElementById("whisperSound").play();
 
         const randomTime = Math.floor(Math.random() * (60 - 1 + 1)) + 1;
         const randomNumber = Math.floor(Math.random() * 17120) + 1;
@@ -114,11 +126,14 @@
         alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
 
         setTimeout(function() {
+            // Остановить шепот и скрыть индикатор загрузки
+            document.getElementById("whisperSound").pause();
             document.getElementById("loading").style.display = "none";
             document.getElementById("errorMessage").style.display = "block";
-        }, randomTime * 1000);
+        }, randomTime * 1000); // Задержка, в течение которой шепот будет играть
     }
 
+    // Двигаем зрачок в глазке за курсором
     document.addEventListener("mousemove", function(e) {
         var eye = document.getElementById("eye");
         var pupil = document.getElementById("pupil");
