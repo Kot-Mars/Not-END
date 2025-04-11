@@ -1,43 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Not the End</title>
     <style>
-        body {
+        * {
+          box-sizing: border-box;
+        }
+
+        body, html {
+          margin: 0;
+          padding: 0;
           background-color: black;
           color: white;
-          font-family: 'Courier New', monospace;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          height: 100vh;
+          font-family: Arial, sans-serif;
           overflow: hidden;
-          margin: 0;
+          height: 100vh;
+        }
+
+        #introScreen {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-color: black;
+          flex-direction: column;
+        }
+
+        #mainContent {
+          display: none;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           text-align: center;
+          height: 100vh;
+          animation: fadeIn 2s ease forwards;
+          opacity: 0;
+        }
+
+        .open-btn {
+          padding: 20px 40px;
+          font-size: 2em;
+          background: yellow;
+          color: black;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background 0.3s;
+        }
+
+        .open-btn:hover {
+          background: orange;
         }
 
         h1 {
-          font-size: 3em;
-          margin-bottom: 0;
+          font-size: 4em;
+          margin: 0;
         }
 
-        #soon {
+        p {
           font-size: 1.5em;
           margin: 10px 0;
           cursor: pointer;
         }
 
-        #soon:hover {
+        p:hover {
           text-decoration: underline;
         }
 
-        .error {
-          color: red;
-          font-size: 1.2em;
-          margin-top: 20px;
+        .spinner {
           display: none;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid yellow;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+          margin-top: 20px;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+          to { opacity: 1; }
         }
 
         #eye {
@@ -74,113 +123,107 @@
           font-size: 1.2em;
           display: none;
           z-index: 1000;
+          animation: fadeInText 1s ease-in-out;
         }
 
-        .glitch {
-          animation: glitch 0.3s infinite;
-        }
-
-        @keyframes glitch {
-          0% { text-shadow: 2px 0 red; }
-          20% { text-shadow: -2px 0 blue; }
-          40% { text-shadow: 2px 0 green; }
-          60% { text-shadow: -1px 1px red; }
-          80% { text-shadow: 1px -1px blue; }
-          100% { text-shadow: 0 0 white; }
+        @keyframes fadeInText {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         #clock {
-          margin-top: 20px;
+          position: absolute;
+          top: 20px;
+          left: 20px;
           font-size: 1.2em;
-          opacity: 0.6;
-        }
-
-        .typing-text {
-          display: inline-block;
-          white-space: pre-wrap;
+          color: rgba(255, 255, 255, 0.6);
         }
     </style>
 </head>
 <body>
 
-<h1>It is not the end</h1>
-<p id="soon">open</p>
-<div id="errorMessage" class="error"></div>
-<div id="eye"><div id="pupil"></div></div>
-<div id="notification" class="typing-text"></div>
-<div id="clock"></div>
+<div id="introScreen">
+    <button class="open-btn" onclick="startExperience()">OPEN</button>
+</div>
+
+<div id="mainContent">
+    <div id="clock"></div>
+    <h1>It is not the end</h1>
+    <p id="soon" onclick="showRandomTime()">soon...</p>
+    <div id="loading" class="spinner"></div>
+    <div id="eye">
+        <div id="pupil"></div>
+    </div>
+</div>
+
+<div id="notification">
+    Thank you, now I know who you are and where you are... See you soon...
+</div>
+
+<audio id="backgroundMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
 
 <audio id="whisperSound" loop>
     <source src="971998521-389170532.mp3" type="audio/mp3">
 </audio>
 
 <script>
-    document.getElementById("soon").addEventListener("click", function () {
+    function startExperience() {
+      document.getElementById("introScreen").style.display = "none";
+      const mainContent = document.getElementById("mainContent");
+      mainContent.style.display = "flex";
+      setTimeout(() => {
+        mainContent.style.opacity = "1";
+      }, 50);
+      document.getElementById("backgroundMusic").play().catch(() => {});
+    }
+
+    function showRandomTime() {
+      document.getElementById("loading").style.display = "block";
       document.getElementById("soon").style.display = "none";
-      document.getElementById("whisperSound").play();
-
-      const messages = [
-        "Thank you.",
-        "Now I know who you are.",
-        "And where you are...",
-        "See you soon..."
-      ];
-
-      let currentIndex = 0;
-      const notification = document.getElementById("notification");
-
-      function typeText(text, i = 0) {
-        if (i < text.length) {
-          notification.innerHTML += text.charAt(i);
-          if (Math.random() < 0.1) {
-            notification.classList.add("glitch");
-          } else {
-            notification.classList.remove("glitch");
-          }
-          setTimeout(() => typeText(text, i + 1), 60);
-        } else {
-          currentIndex++;
-          setTimeout(() => {
-            if (currentIndex < messages.length) {
-              notification.innerHTML += "\n";
-              typeText(messages[currentIndex]);
-            } else {
-              document.getElementById("whisperSound").pause();
-            }
-          }, 1000);
-        }
-      }
-
-      notification.style.display = "block";
-      typeText(messages[currentIndex]);
-    });
+      document.getElementById("whisperSound").play().catch(() => {});
+      const randomTime = Math.floor(Math.random() * 60) + 1;
+      const randomNumber = Math.floor(Math.random() * 17120) + 1;
+      alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
+      setTimeout(function () {
+        document.getElementById("whisperSound").pause();
+        document.getElementById("loading").style.display = "none";
+        const notification = document.getElementById("notification");
+        notification.style.display = "block";
+        setTimeout(function () {
+          notification.style.display = "none";
+          document.getElementById("soon").style.display = "block";
+        }, 5000);
+      }, randomTime * 1000);
+    }
 
     document.addEventListener("mousemove", function (e) {
       const eye = document.getElementById("eye");
       const pupil = document.getElementById("pupil");
-      const rect = eye.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      const eyeRect = eye.getBoundingClientRect();
+      const centerX = eyeRect.left + eyeRect.width / 2;
+      const centerY = eyeRect.top + eyeRect.height / 2;
       const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-      const distance = Math.min(rect.width / 4, rect.height / 4);
-      const pupilX = Math.cos(angle) * distance;
-      const pupilY = Math.sin(angle) * distance;
+      const distance = Math.min(eyeRect.width / 4, eyeRect.height / 4);
+      const pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
+      const pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
       pupil.style.left = `calc(50% + ${pupilX}px)`;
       pupil.style.top = `calc(50% + ${pupilY}px)`;
     });
 
-    const clock = document.getElementById("clock");
     setInterval(() => {
       const now = new Date();
+      const clock = document.getElementById("clock");
       clock.textContent = now.toLocaleTimeString();
     }, 1000);
 </script>
+
 <!--
 I came here to find what you left behind.
 To listen to your silence.
 To wait for your message.
 And to see — if you still remember.
 -->
-<!-- I came here to see if you’d follow the signs, or ignore them like everyone else. -->
 </body>
 </html>
