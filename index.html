@@ -22,6 +22,7 @@
         h1 {
             font-size: 4em;
             margin: 0;
+            display: none; /* Initially hidden */
         }
 
         p {
@@ -95,45 +96,114 @@
             font-size: 1.2em;
             display: none;
             z-index: 1000;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #openButton {
+            font-size: 2em;
+            padding: 15px 30px;
+            background-color: yellow;
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #openButton:hover {
+            background-color: gold;
+        }
+
+        #mainContent {
+            display: none; /* Initially hidden */
+        }
+
+        /* Fullscreen overlay for music control */
+        #musicOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 2em;
         }
     </style>
 </head>
 <body>
 
-<h1>It is not the end</h1>
-<p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+<!-- Initial "Open" Button -->
+<button id="openButton" onclick="start()">Open</button>
 
-<div id="loading" class="spinner"></div>
+<!-- Main Content (Hidden initially) -->
+<div id="mainContent">
+    <h1>It is not the end</h1>
+    <p id="soon" onclick="showRandomTime()">soon...</p>
+    <p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
 
-<div id="eye">
-    <div id="pupil"></div>
-</div>
+    <div id="loading" class="spinner"></div>
 
-<audio id="backgroundMusic" loop>
-    <source src="music.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <div id="eye">
+        <div id="pupil"></div>
+    </div>
 
-<audio id="whisperSound" loop>
-    <source src="971998521-389170532.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
-<div id="notification">
-    Thank you, now I know who you are and where you are... See you soon...
+    <audio id="whisperSound" loop>
+        <source src="971998521-389170532.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="notification">
+        Thank you, now I know who you are and where you are... See you soon...
+    </div>
 </div>
 
 <script>
-    // Включить фоновую музыку после загрузки
-    window.addEventListener("load", () => {
+    // Function to start the experience
+    function start() {
+        // Hide the "Open" button and show the main content
+        document.getElementById("openButton").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+
+        // Play background music
         const bgMusic = document.getElementById("backgroundMusic");
         bgMusic.play().catch(() => {
-            // Браузеры могут блокировать автоплей, если нет взаимодействия
             console.log("Autoplay blocked until user interaction");
         });
-    });
 
+        // Show a loading overlay before the main content
+        let overlay = document.createElement('div');
+        overlay.id = "musicOverlay";
+        overlay.innerHTML = "Now playing music... Please wait.";
+        document.body.appendChild(overlay);
+
+        // Remove the overlay after 2 seconds
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 2000);
+    }
+
+    // Show random time and the whisper effect
     function showRandomTime() {
         document.getElementById("loading").style.display = "block";
         document.getElementById("soon").style.display = "none";
