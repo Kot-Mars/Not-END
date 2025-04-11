@@ -16,6 +16,7 @@
             margin: 0;
             text-align: center;
             flex-direction: column;
+            overflow: hidden;
         }
 
         h1 {
@@ -58,6 +59,29 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        #eye {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        #pupil {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: black;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body>
@@ -68,7 +92,18 @@
 
 <div id="loading" class="spinner"></div>
 
+<div id="eye">
+    <div id="pupil"></div>
+</div>
+
+<audio id="horrorMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
 <script>
+    document.getElementById("horrorMusic").play();
+
     function showRandomTime() {
         document.getElementById("loading").style.display = "block";
         document.getElementById("soon").style.display = "none";
@@ -83,6 +118,23 @@
             document.getElementById("errorMessage").style.display = "block";
         }, randomTime * 1000);
     }
+
+    document.addEventListener("mousemove", function(e) {
+        var eye = document.getElementById("eye");
+        var pupil = document.getElementById("pupil");
+
+        var eyeRect = eye.getBoundingClientRect();
+        var centerX = eyeRect.left + eyeRect.width / 2;
+        var centerY = eyeRect.top + eyeRect.height / 2;
+
+        var angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+        var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4);
+
+        var pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
+        var pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
+
+        pupil.style.transform = "translate(-50%, -50%) translate(" + pupilX + "px, " + pupilY + "px)";
+    });
 </script>
 
 </body>
