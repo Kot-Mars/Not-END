@@ -143,7 +143,7 @@
         var centerY = eyeRect.top + eyeRect.height / 2;
 
         var angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-        var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4);
+        var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4); // ограничиваем движение зрачка
 
         var pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
         var pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
