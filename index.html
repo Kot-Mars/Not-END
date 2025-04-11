@@ -41,14 +41,9 @@
             display: none;
         }
 
-        /* Центрирование спиннера */
         #loading {
             display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2; /* Убедимся, что спиннер будет поверх контента */
+            margin-top: 20px;
         }
 
         .spinner {
@@ -75,7 +70,6 @@
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            z-index: 1; /* Задаем правильный порядок наложения */
         }
 
         #pupil {
@@ -101,79 +95,46 @@
             display: none;
             z-index: 1000;
         }
-
-        /* Кнопка для начала */
-        #openButton {
-            font-size: 2em;
-            padding: 20px 40px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            border-radius: 10px;
-            cursor: pointer;
-            z-index: 2; /* Кнопка будет поверх всего остального до начала загрузки */
-        }
-
-        #openButton:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Скрытый контент, который появится после нажатия */
-        #mainContent {
-            display: none;
-            position: relative;
-            z-index: 1; /* Чтобы основное содержимое было ниже кнопки и спиннера */
-            padding-top: 100px; /* Добавим отступ сверху, чтобы текст не перекрывался с глазом */
-        }
-
     </style>
 </head>
 <body>
 
-<!-- Кнопка для открытия -->
-<button id="openButton" onclick="openSite()">Open</button>
+<h1>It is not the end</h1>
+<p id="soon" onclick="showRandomTime()">soon...</p>
+<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
 
-<!-- Основной контент (скрыт по умолчанию) -->
-<div id="mainContent">
-    <h1>It is not the end</h1>
-    <p id="soon" onclick="showRandomTime()">soon...</p>
-    <p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+<div id="loading" class="spinner"></div>
 
-    <div id="loading" class="spinner"></div>
+<div id="eye">
+    <div id="pupil"></div>
+</div>
 
-    <div id="eye">
-        <div id="pupil"></div>
-    </div>
+<audio id="backgroundMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
 
-    <audio id="backgroundMusic" loop>
-        <source src="music.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+<audio id="whisperSound" loop>
+    <source src="971998521-389170532.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
 
-    <audio id="whisperSound" loop>
-        <source src="971998521-389170532.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
-    <div id="notification">
-        Thank you, now I know who you are and where you are... See you soon...
-    </div>
+<div id="notification">
+    Thank you, now I know who you are and where you are... See you soon...
 </div>
 
 <script>
-    function openSite() {
-        // Начинаем воспроизведение музыки
+    // Включить фоновую музыку
+    window.addEventListener("DOMContentLoaded", function () {
         const backgroundMusic = document.getElementById("backgroundMusic");
         backgroundMusic.volume = 0.5;
         backgroundMusic.play().catch(() => {
+            // В некоторых браузерах воспроизведение возможно только после взаимодействия
             document.body.addEventListener('click', () => {
                 backgroundMusic.play();
             }, { once: true });
         });
-
-        // Прячем кнопку и показываем основной контент
-        document.getElementById("openButton").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-    }
+    });
 
     function showRandomTime() {
         document.getElementById("loading").style.display = "block";
