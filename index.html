@@ -138,6 +138,14 @@
           font-size: 1.2em;
           color: rgba(255, 255, 255, 0.6);
         }
+
+        .error {
+          color: red;
+          font-size: 1.2em;
+          margin-top: 20px;
+          display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -154,6 +162,7 @@
     <div id="eye">
         <div id="pupil"></div>
     </div>
+    <div id="errorMessage" class="error"></div>
 </div>
 
 <div id="notification">
@@ -186,15 +195,28 @@
       const randomTime = Math.floor(Math.random() * 60) + 1;
       const randomNumber = Math.floor(Math.random() * 17120) + 1;
       alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
+
       setTimeout(function () {
         document.getElementById("whisperSound").pause();
         document.getElementById("loading").style.display = "none";
+        const errorMessage = document.getElementById("errorMessage");
         const notification = document.getElementById("notification");
-        notification.style.display = "block";
-        setTimeout(function () {
-          notification.style.display = "none";
-          document.getElementById("soon").style.display = "block";
-        }, 5000);
+
+        // Случайная ошибка или успех
+        const isError = Math.random() < 0.2; // 20% шанс на ошибку
+        if (isError) {
+          errorMessage.style.display = "block";
+          errorMessage.innerHTML = "Sorry, something went wrong. Please try again later.";
+          setTimeout(() => {
+            errorMessage.style.display = "none";
+          }, 5000);  // Ошибка исчезает через 5 секунд
+        } else {
+          notification.style.display = "block";
+          setTimeout(function () {
+            notification.style.display = "none";
+            document.getElementById("soon").style.display = "block";
+          }, 5000); // Сообщение пропадает через 5 секунд
+        }
       }, randomTime * 1000);
     }
 
