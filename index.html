@@ -95,46 +95,74 @@
             display: none;
             z-index: 1000;
         }
+
+        /* Кнопка для начала */
+        #openButton {
+            font-size: 2em;
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #openButton:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Скрытый контент, который появится после нажатия */
+        #mainContent {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-<h1>It is not the end</h1>
-<p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+<!-- Кнопка для открытия -->
+<button id="openButton" onclick="openSite()">Open</button>
 
-<div id="loading" class="spinner"></div>
+<!-- Основной контент (скрыт по умолчанию) -->
+<div id="mainContent">
+    <h1>It is not the end</h1>
+    <p id="soon" onclick="showRandomTime()">soon...</p>
+    <p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
 
-<div id="eye">
-    <div id="pupil"></div>
-</div>
+    <div id="loading" class="spinner"></div>
 
-<audio id="backgroundMusic" loop>
-    <source src="music.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <div id="eye">
+        <div id="pupil"></div>
+    </div>
 
-<audio id="whisperSound" loop>
-    <source src="971998521-389170532.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
-<div id="notification">
-    Thank you, now I know who you are and where you are... See you soon...
+    <audio id="whisperSound" loop>
+        <source src="971998521-389170532.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="notification">
+        Thank you, now I know who you are and where you are... See you soon...
+    </div>
 </div>
 
 <script>
-    // Включить фоновую музыку
-    window.addEventListener("DOMContentLoaded", function () {
+    function openSite() {
+        // Начинаем воспроизведение музыки
         const backgroundMusic = document.getElementById("backgroundMusic");
         backgroundMusic.volume = 0.5;
         backgroundMusic.play().catch(() => {
-            // В некоторых браузерах воспроизведение возможно только после взаимодействия
             document.body.addEventListener('click', () => {
                 backgroundMusic.play();
             }, { once: true });
         });
-    });
+
+        // Прячем кнопку и показываем основной контент
+        document.getElementById("openButton").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    }
 
     function showRandomTime() {
         document.getElementById("loading").style.display = "block";
