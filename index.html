@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Not the End</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+        * {
+          box-sizing: border-box;
+        }
 
         body, html {
           margin: 0;
           padding: 0;
           background-color: black;
           color: white;
-          font-family: 'Rubik Glitch', cursive;
+          font-family: Arial, sans-serif;
           overflow: hidden;
           height: 100vh;
         }
@@ -61,12 +63,10 @@
           font-size: 1.5em;
           margin: 10px 0;
           cursor: pointer;
-          animation: blink 1.5s infinite;
         }
 
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+        p:hover {
+          text-decoration: underline;
         }
 
         .spinner {
@@ -99,7 +99,6 @@
           left: 50%;
           transform: translateX(-50%);
           box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-          animation: glitchEye 1s infinite;
         }
 
         #pupil {
@@ -113,12 +112,6 @@
           transform: translate(-50%, -50%);
         }
 
-        @keyframes glitchEye {
-          0% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-48%) translateY(-2px); }
-          100% { transform: translateX(-50%) translateY(0); }
-        }
-
         #notification {
           position: fixed;
           top: 20px;
@@ -130,33 +123,6 @@
           font-size: 1.2em;
           display: none;
           z-index: 1000;
-        }
-
-        .night h1, .night p {
-          color: #ff0040;
-          text-shadow: 0 0 10px red;
-        }
-
-        .vhs {
-          position: fixed;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          background: repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.01),
-            rgba(255, 255, 255, 0.01) 1px,
-            transparent 1px,
-            transparent 2px
-          );
-          animation: scanlines 0.2s linear infinite;
-          z-index: 999;
-        }
-
-        @keyframes scanlines {
-          0% { background-position: 0 0; }
-          100% { background-position: 0 2px; }
         }
     </style>
 </head>
@@ -174,8 +140,6 @@
         <div id="pupil"></div>
     </div>
 </div>
-
-<div class="vhs"></div>
 
 <div id="notification">
     Thank you, now I know who you are and where you are... See you soon...
@@ -197,12 +161,6 @@
       setTimeout(() => {
         mainContent.style.opacity = "1";
       }, 50);
-
-      const hour = new Date().getHours();
-      if (hour >= 22 || hour < 6) {
-        document.body.classList.add('night');
-      }
-
       document.getElementById("backgroundMusic").play().catch(() => {});
     }
 
@@ -216,9 +174,9 @@
       setTimeout(function () {
         document.getElementById("whisperSound").pause();
         document.getElementById("loading").style.display = "none";
-        const notification = document.getElementById("notification");
+        var notification = document.getElementById("notification");
         notification.style.display = "block";
-        setTimeout(() => {
+        setTimeout(function () {
           notification.style.display = "none";
         }, 5000);
       }, randomTime * 1000);
