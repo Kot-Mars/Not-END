@@ -66,10 +66,11 @@
             height: 100px;
             border-radius: 50%;
             background-color: white;
-            bottom: 10%;  /* Перемещаем глаз вниз */
+            bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            overflow: hidden;
         }
 
         #pupil {
@@ -78,8 +79,8 @@
             height: 40px;
             border-radius: 50%;
             background-color: black;
-            top: 50%;  /* Центрируем зрачок в глазу */
-            left: 50%;  /* Центрируем зрачок в глазу */
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
         }
 
@@ -109,15 +110,13 @@
     <div id="pupil"></div>
 </div>
 
-<!-- Фоновая музыка -->
 <audio id="backgroundMusic" loop>
-    <source src="music.mp3" type="audio/mp3"> <!-- Замените на путь к вашему аудиофайлу -->
+    <source src="music.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
-<!-- Шепот, который будет зациклен при нажатии -->
 <audio id="whisperSound" loop>
-    <source src="971998521-389170532.mp3" type="audio/mp3"> <!-- Замените на путь к вашему аудиофайлу с шепотом -->
+    <source src="971998521-389170532.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
@@ -126,41 +125,41 @@
 </div>
 
 <script>
-    // Включить фоновую музыку
-    document.getElementById("backgroundMusic").play();
+    // Включить фоновую музыку после загрузки
+    window.addEventListener("load", () => {
+        const bgMusic = document.getElementById("backgroundMusic");
+        bgMusic.play().catch(() => {
+            // Браузеры могут блокировать автоплей, если нет взаимодействия
+            console.log("Autoplay blocked until user interaction");
+        });
+    });
 
     function showRandomTime() {
-        // Показать индикатор загрузки и скрыть текст "soon..."
         document.getElementById("loading").style.display = "block";
         document.getElementById("soon").style.display = "none";
 
-        // Включить шепот
-        document.getElementById("whisperSound").play();
+        const whisper = document.getElementById("whisperSound");
+        whisper.play();
 
-        const randomTime = Math.floor(Math.random() * (60 - 1 + 1)) + 1;
+        const randomTime = Math.floor(Math.random() * 60) + 1;
         const randomNumber = Math.floor(Math.random() * 17120) + 1;
 
         alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
 
-        setTimeout(function() {
-            // Остановить шепот и скрыть индикатор загрузки
-            document.getElementById("whisperSound").pause();
+        setTimeout(function () {
+            whisper.pause();
             document.getElementById("loading").style.display = "none";
             document.getElementById("errorMessage").style.display = "block";
 
-            // Показать уведомление
             var notification = document.getElementById("notification");
             notification.style.display = "block";
-
-            // Скрыть уведомление через 5 секунд
-            setTimeout(function() {
+            setTimeout(() => {
                 notification.style.display = "none";
             }, 5000);
-        }, randomTime * 1000); // Задержка, в течение которой шепот будет играть
+        }, randomTime * 1000);
     }
 
-    // Двигаем зрачок в глазке за курсором
-    document.addEventListener("mousemove", function(e) {
+    document.addEventListener("mousemove", function (e) {
         var eye = document.getElementById("eye");
         var pupil = document.getElementById("pupil");
 
@@ -168,16 +167,16 @@
         var centerX = eyeRect.left + eyeRect.width / 2;
         var centerY = eyeRect.top + eyeRect.height / 2;
 
-        var angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-        var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4); // ограничиваем движение зрачка
+        var dx = e.clientX - centerX;
+        var dy = e.clientY - centerY;
 
-        // Вычисляем координаты зрачка с учетом центра
-        var pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
-        var pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
+        var angle = Math.atan2(dy, dx);
+        var maxDistance = 25;
 
-        // Обновляем позицию зрачка
-        pupil.style.left = `calc(50% + ${pupilX}px)`;
-        pupil.style.top = `calc(50% + ${pupilY}px)`;
+        var pupilX = Math.cos(angle) * maxDistance;
+        var pupilY = Math.sin(angle) * maxDistance;
+
+        pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
     });
 </script>
 
