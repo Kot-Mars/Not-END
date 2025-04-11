@@ -171,11 +171,24 @@
             }
         }
 
-        #currentTime {
-            font-size: 2em;
-            margin-bottom: 20px;
+        /* Медленное мерцание */
+        @keyframes slowTwinkle {
+            0% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0.8;
+            }
         }
 
+        #soon {
+            animation: slowTwinkle 3s infinite alternate;
+        }
+
+        /* Звезды на фоне */
         .star {
             position: absolute;
             background-color: white;
@@ -214,6 +227,7 @@
 
 <!-- Main content -->
 <div id="mainContent">
+    <!-- Вставим сюда текущее время -->
     <div id="currentTime"></div>
     <h1>It is not the end</h1>
     <p id="soon" onclick="showRandomTime()">soon...</p>
@@ -242,6 +256,7 @@
 </audio>
 
 <script>
+    // Функция для обновления времени
     function updateCurrentTime() {
         const currentTimeElement = document.getElementById("currentTime");
         const now = new Date();
@@ -251,8 +266,10 @@
         currentTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
 
+    // Обновляем время каждую секунду
     setInterval(updateCurrentTime, 1000);
 
+    // Создание случайных звезд
     function createStars() {
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
@@ -265,7 +282,7 @@
         }
     }
 
-    createStars();
+    createStars(); // Создаем звезды на фоне
 
     // Запуск при нажатии "Open"
     document.getElementById("openBtn").addEventListener("click", function () {
@@ -308,6 +325,7 @@
         }, randomTime * 1000);
     }
 
+    // Зрачок следует за курсором
     document.addEventListener("mousemove", function (e) {
         const eye = document.getElementById("eye");
         const pupil = document.getElementById("pupil");
