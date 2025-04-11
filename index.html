@@ -6,9 +6,9 @@
     <title>Not the End</title>
     <style>
         body {
-            background-color: black; /* Черный фон */
-            color: white; /* Белый текст */
-            font-family: Arial, sans-serif; /* Шрифт */
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,25 +19,44 @@
         }
 
         h1 {
-            font-size: 4em; /* Большие буквы */
+            font-size: 4em;
             margin: 0;
         }
 
         p {
-            font-size: 1.5em; /* Маленькие буквы для "soon..." */
+            font-size: 1.5em;
             margin: 10px 0;
-            cursor: pointer; /* Изменение курсора на указатель */
+            cursor: pointer;
         }
 
         p:hover {
-            text-decoration: underline; /* Подчеркивание текста при наведении */
+            text-decoration: underline;
         }
 
         .error {
             color: red;
             font-size: 1.5em;
             margin-top: 20px;
-            display: none; /* Скрыто по умолчанию */
+            display: none;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid yellow;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -45,24 +64,26 @@
 
 <h1>It is not the end</h1>
 <p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available
-    yet)</p>
+<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+
+<div id="loading" class="spinner"></div>
 
 <script>
     function showRandomTime() {
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("soon").style.display = "none";
 
         const randomTime = Math.floor(Math.random() * (60 - 1 + 1)) + 1;
-
         const randomNumber = Math.floor(Math.random() * 17120) + 1;
-
 
         alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
 
-
         setTimeout(function() {
+            document.getElementById("loading").style.display = "none";
             document.getElementById("errorMessage").style.display = "block";
-        }, randomTime * 1000); // Время задержки, преобразованное в миллисекунды
+        }, randomTime * 1000);
     }
 </script>
+
 </body>
 </html>
