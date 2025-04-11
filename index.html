@@ -81,7 +81,6 @@
             top: 50%;  /* Центрируем зрачок в глазу */
             left: 50%;  /* Центрируем зрачок в глазу */
             transform: translate(-50%, -50%);
-            transform-origin: 50% 50%; /* Устанавливаем точку вращения в центр */
         }
     </style>
 </head>
@@ -146,10 +145,13 @@
         var angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
         var distance = Math.min(eyeRect.width / 4, eyeRect.height / 4); // ограничиваем движение зрачка
 
+        // Вычисляем координаты зрачка с учетом центра
         var pupilX = centerX + Math.cos(angle) * distance - eyeRect.left - pupil.offsetWidth / 2;
         var pupilY = centerY + Math.sin(angle) * distance - eyeRect.top - pupil.offsetHeight / 2;
 
-        pupil.style.transform = "translate(-50%, -50%) translate(" + pupilX + "px, " + pupilY + "px)";
+        // Обновляем позицию зрачка
+        pupil.style.left = `calc(50% + ${pupilX}px)`;
+        pupil.style.top = `calc(50% + ${pupilY}px)`;
     });
 </script>
 
