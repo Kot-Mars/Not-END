@@ -70,7 +70,6 @@
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            overflow: hidden;
         }
 
         #pupil {
@@ -125,12 +124,15 @@
 </div>
 
 <script>
-    // Включить фоновую музыку после загрузки
-    window.addEventListener("load", () => {
-        const bgMusic = document.getElementById("backgroundMusic");
-        bgMusic.play().catch(() => {
-            // Браузеры могут блокировать автоплей, если нет взаимодействия
-            console.log("Autoplay blocked until user interaction");
+    // Включить фоновую музыку
+    window.addEventListener("DOMContentLoaded", function () {
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        backgroundMusic.volume = 0.5;
+        backgroundMusic.play().catch(() => {
+            // В некоторых браузерах воспроизведение возможно только после взаимодействия
+            document.body.addEventListener('click', () => {
+                backgroundMusic.play();
+            }, { once: true });
         });
     });
 
@@ -139,9 +141,10 @@
         document.getElementById("soon").style.display = "none";
 
         const whisper = document.getElementById("whisperSound");
+        whisper.volume = 0.6;
         whisper.play();
 
-        const randomTime = Math.floor(Math.random() * 60) + 1;
+        const randomTime = Math.floor(Math.random() * (60 - 1 + 1)) + 1;
         const randomNumber = Math.floor(Math.random() * 17120) + 1;
 
         alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
@@ -151,32 +154,34 @@
             document.getElementById("loading").style.display = "none";
             document.getElementById("errorMessage").style.display = "block";
 
-            var notification = document.getElementById("notification");
+            const notification = document.getElementById("notification");
             notification.style.display = "block";
-            setTimeout(() => {
+
+            setTimeout(function () {
                 notification.style.display = "none";
             }, 5000);
         }, randomTime * 1000);
     }
 
+    // Зрачок следует за курсором
     document.addEventListener("mousemove", function (e) {
-        var eye = document.getElementById("eye");
-        var pupil = document.getElementById("pupil");
+        const eye = document.getElementById("eye");
+        const pupil = document.getElementById("pupil");
 
-        var eyeRect = eye.getBoundingClientRect();
-        var centerX = eyeRect.left + eyeRect.width / 2;
-        var centerY = eyeRect.top + eyeRect.height / 2;
+        const eyeRect = eye.getBoundingClientRect();
+        const centerX = eyeRect.left + eyeRect.width / 2;
+        const centerY = eyeRect.top + eyeRect.height / 2;
 
-        var dx = e.clientX - centerX;
-        var dy = e.clientY - centerY;
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
 
-        var angle = Math.atan2(dy, dx);
-        var maxDistance = 25;
+        const angle = Math.atan2(dy, dx);
+        const distance = Math.min(eyeRect.width / 4, Math.hypot(dx, dy));
 
-        var pupilX = Math.cos(angle) * maxDistance;
-        var pupilY = Math.sin(angle) * maxDistance;
+        const pupilX = Math.cos(angle) * distance;
+        const pupilY = Math.sin(angle) * distance;
 
-        pupil.style.transform = translate(${pupilX}px, ${pupilY}px);
+        pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
     });
 </script>
 
