@@ -83,6 +83,27 @@
             transform: translate(-50%, -50%);
             transform-origin: 50% 50%; /* Устанавливаем точку вращения в центр */
         }
+
+        /* Уведомление */
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            display: none;
+            z-index: 1000;
+            animation: fadeInText 1s ease-in-out;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
     </style>
 </head>
 <body>
@@ -109,6 +130,10 @@
     Your browser does not support the audio element.
 </audio>
 
+<div id="notification">
+    Thank you, now I know who you are and where you are... See you soon...
+</div>
+
 <script>
     // Включить фоновую музыку
     document.getElementById("backgroundMusic").play();
@@ -131,14 +156,20 @@
             document.getElementById("whisperSound").pause();
             document.getElementById("loading").style.display = "none";
             document.getElementById("errorMessage").style.display = "block";
+
+            // Показать уведомление
+            const notification = document.getElementById("notification");
+            notification.style.display = "block";
+
+            // Скрыть уведомление через 5 секунд
+            setTimeout(function() {
+                notification.style.display = "none";
+            }, 5000);
         }, randomTime * 1000); // Задержка, в течение которой шепот будет играть
     }
 
     // Двигаем зрачок в глазке за курсором
-    document.
-
-KM, [11.04.2025 18:14]
-addEventListener("mousemove", function(e) {
+    document.addEventListener("mousemove", function(e) {
         var eye = document.getElementById("eye");
         var pupil = document.getElementById("pupil");
 
