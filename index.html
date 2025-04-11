@@ -1,22 +1,62 @@
 <!DOCTYPE html>
+<!-- I came here to see if you’d follow the signs, or ignore them like everyone else. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not the End</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #introScreen {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            text-align: center;
+            background-color: black;
+        }
+
+        #openBtn {
+            font-size: 2em;
+            padding: 15px 40px;
+            background-color: yellow;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            opacity: 0;
+            animation: fadeInButton 2s forwards;
+        }
+
+        @keyframes fadeInButton {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        #openBtn:hover {
+            transform: scale(1.1);
+            background-color: orange;
+        }
+
+        #mainContent {
+            display: none;
             flex-direction: column;
-            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
         }
 
         h1 {
@@ -28,6 +68,8 @@
             font-size: 1.5em;
             margin: 10px 0;
             cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
         }
 
         p:hover {
@@ -81,6 +123,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-in-out, background-color 0.3s ease;
         }
 
         #notification {
@@ -94,21 +137,100 @@
             font-size: 1.2em;
             display: none;
             z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideIn 1s forwards;
         }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #currentTime {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+        }
+
+        /* Расположение звезд по всему экрану */
+        .star:nth-child(odd) {
+            animation-duration: 1.2s;
+        }
+
+        .star:nth-child(even) {
+            animation-duration: 1.8s;
+        }
+
     </style>
 </head>
 <body>
 
-<h1>It is not the end</h1>
-<p id="soon" onclick="showRandomTime()">soon...</p>
-<p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
-
-<div id="loading" class="spinner"></div>
-
-<div id="eye">
-    <div id="pupil"></div>
+<!-- Intro screen -->
+<div id="introScreen">
+    <button id="openBtn">Open</button>
 </div>
 
+<!-- Main content -->
+<div id="mainContent">
+    <div id="currentTime"></div>
+    <h1>It is not the end</h1>
+    <p id="soon" onclick="showRandomTime()">soon...</p>
+    <p id="errorMessage" class="error">Sorry, something went wrong. Please try again later (Content might not be available yet)</p>
+
+    <div id="loading" class="spinner"></div>
+
+    <div id="eye">
+        <div id="pupil"></div>
+    </div>
+
+    <div id="notification">
+        Thank you, now I know who you are and where you are... See you soon...
+    </div>
+</div>
+
+<!-- Audio -->
 <audio id="backgroundMusic" loop>
     <source src="music.mp3" type="audio/mp3">
     Your browser does not support the audio element.
@@ -119,17 +241,40 @@
     Your browser does not support the audio element.
 </audio>
 
-<div id="notification">
-    Thank you, now I know who you are and where you are... See you soon...
-</div>
-
 <script>
-    // Включить фоновую музыку
-    window.addEventListener("DOMContentLoaded", function () {
+    function updateCurrentTime() {
+        const currentTimeElement = document.getElementById("currentTime");
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        currentTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateCurrentTime, 1000);
+
+    function createStars() {
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 3 + 1}px`;
+            star.style.height = star.style.width;
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(star);
+        }
+    }
+
+    createStars();
+
+    // Запуск при нажатии "Open"
+    document.getElementById("openBtn").addEventListener("click", function () {
+        document.getElementById("introScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "flex";
+
         const backgroundMusic = document.getElementById("backgroundMusic");
         backgroundMusic.volume = 0.5;
         backgroundMusic.play().catch(() => {
-            // В некоторых браузерах воспроизведение возможно только после взаимодействия
             document.body.addEventListener('click', () => {
                 backgroundMusic.play();
             }, { once: true });
@@ -144,7 +289,7 @@
         whisper.volume = 0.6;
         whisper.play();
 
-        const randomTime = Math.floor(Math.random() * (60 - 1 + 1)) + 1;
+        const randomTime = Math.floor(Math.random() * 60) + 1;
         const randomNumber = Math.floor(Math.random() * 17120) + 1;
 
         alert('Accept request, please wait: ' + randomTime + ' seconds\nYour ID: ' + randomNumber);
@@ -163,7 +308,6 @@
         }, randomTime * 1000);
     }
 
-    // Зрачок следует за курсором
     document.addEventListener("mousemove", function (e) {
         const eye = document.getElementById("eye");
         const pupil = document.getElementById("pupil");
@@ -181,9 +325,23 @@
         const pupilX = Math.cos(angle) * distance;
         const pupilY = Math.sin(angle) * distance;
 
-        pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+        pupil.style.transform = `translate(-50%, -50%) translate(${pupilX}px, ${pupilY}px)`;
+
+        const distFromCenter = Math.hypot(dx, dy);
+        if (distFromCenter < 30) {
+            pupil.style.backgroundColor = 'red';
+            pupil.style.transform = `translate(-50%, -50%) scale(1.2) translate(${pupilX}px, ${pupilY}px)`;
+        } else {
+            pupil.style.backgroundColor = 'black';
+            pupil.style.transform = `translate(-50%, -50%) scale(1) translate(${pupilX}px, ${pupilY}px)`;
+        }
     });
 </script>
-
+<!--
+I came here to find what you left behind.
+To listen to your silence.
+To wait for your message.
+And to see — if you still remember.
+-->
 </body>
 </html>
