@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e2ae02d1-48e2-4ff4-809e-f8528b364337" name="Changes" comment="5" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Kot-Mars"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Kot-Mars/Not-END.git",
+    "accountId": "625af68a-1a00-4591-b6e9-d70ab42347bc"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2va1RzflePu4Ru1ujyMyGtdRfHs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "zielu.gittoolbox.prj.config.v2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2ae02d1-48e2-4ff4-809e-f8528b364337" name="Changes" comment="" />
+      <created>1744368376837</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744368376837</updated>
+    </task>
+    <task id="LOCAL-00001" summary="add index.html">
+      <option name="closed" value="true" />
+      <created>1744368705410</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368705410</updated>
+    </task>
+    <task id="LOCAL-00002" summary="delete .idea">
+      <option name="closed" value="true" />
+      <created>1744368963490</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368963490</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update">
+      <option name="closed" value="true" />
+      <created>1744369287467</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744369287467</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update loading">
+      <option name="closed" value="true" />
+      <created>1744369609441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744369609441</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update audio">
+      <option name="closed" value="true" />
+      <created>1744369930900</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744369930900</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add audio">
+      <option name="closed" value="true" />
+      <created>1744371048260</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744371048260</updated>
+    </task>
+    <task id="LOCAL-00007" summary="down">
+      <option name="closed" value="true" />
+      <created>1744371465238</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744371465238</updated>
+    </task>
+    <task id="LOCAL-00008" summary="down">
+      <option name="closed" value="true" />
+      <created>1744371635565</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744371635565</updated>
+    </task>
+    <task id="LOCAL-00009" summary="down">
+      <option name="closed" value="true" />
+      <created>1744371814512</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744371814512</updated>
+    </task>
+    <task id="LOCAL-00010" summary="down2">
+      <option name="closed" value="true" />
+      <created>1744372185096</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744372185096</updated>
+    </task>
+    <task id="LOCAL-00011" summary="down3">
+      <option name="closed" value="true" />
+      <created>1744372851758</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744372851758</updated>
+    </task>
+    <task id="LOCAL-00012" summary="down4">
+      <option name="closed" value="true" />
+      <created>1744373583249</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744373583249</updated>
+    </task>
+    <task id="LOCAL-00013" summary="5">
+      <option name="closed" value="true" />
+      <created>1744374001664</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744374001664</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add index.html" />
+    <MESSAGE value="delete .idea" />
+    <MESSAGE value="update" />
+    <MESSAGE value="update loading" />
+    <MESSAGE value="update audio" />
+    <MESSAGE value="add audio" />
+    <MESSAGE value="down" />
+    <MESSAGE value="down2" />
+    <MESSAGE value="down3" />
+    <MESSAGE value="down4" />
+    <MESSAGE value="5" />
+    <option name="LAST_COMMIT_MESSAGE" value="5" />
+  </component>
+</project>
